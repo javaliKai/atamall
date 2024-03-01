@@ -5,18 +5,20 @@ import SigninForm from '../components/auth/SigninForm';
 
 const SignIn = () => {
   return (
-    <Card className='mt-5'>
-      <h2 className='text-center text-3xl font-bold'>Sign In</h2>
-      <SigninForm />
-      <div className='mt-2'>
-        <p>
-          Don't have an account?{' '}
-          <Link to='/register' className='font-bold hover:text-underline'>
-            register here
-          </Link>
-        </p>
-      </div>
-    </Card>
+    <div className='md:flex md:justify-center'>
+      <Card className='mt-5 md:w-[35vw]'>
+        <h2 className='text-center text-3xl font-bold'>Sign In</h2>
+        <SigninForm />
+        <div className='mt-2'>
+          <p>
+            Don't have an account?{' '}
+            <Link to='/register' className='font-bold hover:text-underline'>
+              register here
+            </Link>
+          </p>
+        </div>
+      </Card>
+    </div>
   );
 };
 

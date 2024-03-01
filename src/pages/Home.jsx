@@ -83,10 +83,11 @@ const Home = () => {
         rightIcon={CiSearch}
         placeholder='Search Product...'
         required
+        className='mb-2 md:mb-4'
       />
       {(!isSearching || !keyword) && <Carousel />}
       <article className='py-16'>
-        <div className='flex md:flex-col justify-between'>
+        <div className='flex justify-between'>
           <div>
             {isSearching || keyword ? (
               <h2 className='text-2xl md:text-3xl mb-[2rem]'>
@@ -96,7 +97,7 @@ const Home = () => {
               <h2 className='text-2xl md:text-3xl mb-[2rem]'>Our Products</h2>
             )}
           </div>
-          <div>
+          <div className='md:w-[10%]'>
             <Select onChange={(e) => setProductFilter(e.target.value)}>
               <option value='all'>All</option>
               <option value='electronics'>Electronics</option>
@@ -104,59 +105,7 @@ const Home = () => {
               <option value="women's clothing">Women's Clothing</option>
               <option value='jewelery'>Jewelry</option>
             </Select>
-            {/* <Dropdown label='Categories' inline>
-              <Dropdown.Item>All</Dropdown.Item>
-              <Dropdown.Item>Electronics</Dropdown.Item>
-              <Dropdown.Item>Men's Clothing</Dropdown.Item>
-              <Dropdown.Item>Women's Clothing</Dropdown.Item>
-              <Dropdown.Item>Jewelery</Dropdown.Item>
-            </Dropdown> */}
           </div>
-          <ul className='hidden flex gap-3'>
-            <li
-              // onClick={() => changeFilterBy('all')}
-              // className={`cursor-pointer ${filterBy === 'all' && 'underline'}`}
-              className={`cursor-pointer`}
-            >
-              All
-            </li>
-            <li>/</li>
-            <li
-            // onClick={() => changeFilterBy('electronics')}
-            // className={`cursor-pointer ${
-            //   filterBy === 'electronics' && 'underline'
-            // }`}
-            >
-              Electronics
-            </li>
-            <li>/</li>
-            <li
-            // onClick={() => changeFilterBy("men's clothing")}
-            // className={`cursor-pointer ${
-            //   filterBy === "men's clothing" && 'underline'
-            // }`}
-            >
-              Men's Clothing
-            </li>
-            <li>/</li>
-            <li
-            // onClick={() => changeFilterBy("women's clothing")}
-            // className={`cursor-pointer ${
-            //   filterBy === "women's clothing" && 'underline'
-            // }`}
-            >
-              Women's Clothing
-            </li>
-            <li>/</li>
-            <li
-            // onClick={() => changeFilterBy('jewelery')}
-            // className={`cursor-pointer ${
-            //   filterBy === 'jewelery' && 'underline'
-            // }`}
-            >
-              Jewelery
-            </li>
-          </ul>
         </div>
         {filteredProducts.length === 0 ? (
           <p className='italic text-center'>No products found!</p>

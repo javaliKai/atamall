@@ -34,7 +34,7 @@ const SigninForm = () => {
   };
 
   return (
-    <form onSubmit={signinHandler} className='flex max-w-md flex-col gap-4'>
+    <form onSubmit={signinHandler} className='flex flex-col gap-4'>
       <div>
         <div className='mb-2 block'>
           <Label htmlFor='email1' value='Your email' />

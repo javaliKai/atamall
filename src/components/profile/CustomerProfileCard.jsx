@@ -129,7 +129,7 @@ const CustomerProfileCard = () => {
     addressContent = <p>No address found.</p>;
   }
   return (
-    <div className='max-w-sm mx-auto bg-white shadow-lg rounded-sm border border-gray-200'>
+    <div className='w-sm md:w-[50vw] mx-auto bg-white shadow-lg rounded-sm border border-gray-200'>
       <h2 className='text-3xl p-3 font-bold text-center'>Profile</h2>
       <hr />
       <div className='flex flex-col h-full'>
@@ -140,7 +140,7 @@ const CustomerProfileCard = () => {
               <div className='flex flex-col gap-5 px-6 py-2 my-5'>
                 <div className='flex items-center gap-3'>
                   <span>
-                    <MdPerson className='text-[20vw] z-11 text-yellow-400 border border-slate-300 rounded-full' />
+                    <MdPerson className='text-[20vw] md:text-[10vw] z-11 text-yellow-400 border border-slate-300 rounded-full' />
                   </span>
                   <div>
                     {editingName ? (
