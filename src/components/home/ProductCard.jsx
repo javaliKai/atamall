@@ -9,10 +9,12 @@ import axios from 'axios';
 import { useContext } from 'react';
 import UserContext from '../../lib/store/userContext';
 import UIContext from '../../lib/store/uiContext';
+import CartContext from '../../lib/store/cartContext';
 
 const ProductCard = ({ product, isWishlist }) => {
   const { _id, title, price, image, category } = product;
   const { token, tradeToken } = useContext(UserContext);
+  const { addToCart } = useContext(CartContext);
   const { setAlert } = useContext(UIContext);
 
   const addToWishlistHandler = () => {
@@ -67,6 +69,29 @@ const ProductCard = ({ product, isWishlist }) => {
       });
   };
 
+  const addToCartHandler = async () => {
+    const productObj = {
+      productId: product._id,
+      title: product.title,
+      image: product.image,
+      category: product.category,
+      price: product.price,
+      quantity: 1,
+    };
+    const result = await addToCart(productObj, token);
+    if (result.errorObj) {
+      setAlert({
+        type: 'failure',
+        message: result.errorObj.message,
+      });
+    } else {
+      setAlert({
+        type: 'success',
+        message: 'Item added to cart!',
+      });
+    }
+  };
+
   return (
     <Card className={`w-[100%] h-[75%] fbCard`}>
       <div className='fbborder border-[#e4e4e4] h-[300px] mb-4 relative overflow-hidden group transition'>
@@ -82,8 +107,7 @@ const ProductCard = ({ product, isWishlist }) => {
         </div>
         {/*buttons*/}
         <div className='absolute top-6 -right-11 group-hover:right-5 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300'>
-          {/* <button onClick={addToCartHandler}> */}
-          <button>
+          <button onClick={() => addToCartHandler()}>
             <div className='flex justify-center items-center text-white w-12 h-12 bg-red-500'>
               <BsPlus className='text-3xl' />
             </div>

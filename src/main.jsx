@@ -6,6 +6,7 @@ import './index.css';
 import { UIContextProvider } from './lib/store/uiContext.jsx';
 import { UserContextProvider } from './lib/store/userContext.jsx';
 import { ProductContextProvider } from './lib/store/productContext.jsx';
+import { CartContextProvider } from './lib/store/cartContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <UIContextProvider>
       <UserContextProvider>
         <ProductContextProvider>
-          <App />
+          <CartContextProvider>
+            <App />
+          </CartContextProvider>
         </ProductContextProvider>
       </UserContextProvider>
     </UIContextProvider>

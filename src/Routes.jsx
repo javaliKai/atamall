@@ -7,6 +7,8 @@ import NotFound from './pages/NotFound';
 import CustomerProfile from './pages/CustomerProfile';
 import ProductDetail from './pages/ProductDetail';
 import Wishlist from './pages/Wishlist';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 const Routes = (isAuthenticated) => [
   {
@@ -35,6 +37,14 @@ const Routes = (isAuthenticated) => [
   {
     path: '/wishlist',
     element: isAuthenticated ? <Wishlist /> : <Navigate to='/signin' />,
+  },
+  {
+    path: '/cart',
+    element: isAuthenticated ? <Cart /> : <Navigate to='/signin' />,
+  },
+  {
+    path: '/checkout',
+    element: isAuthenticated ? <Checkout /> : <Navigate to='/signin' />,
   },
   {
     path: '*',

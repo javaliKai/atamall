@@ -22,6 +22,9 @@ const MobileNav = () => {
           <Link to='/profile'>Profile</Link>
         </li>
         <li className='hover:underline hover:text-cyan-900'>
+          <Link to='/cart'>Cart</Link>
+        </li>
+        <li className='hover:underline hover:text-cyan-900'>
           <Link to='/wishlist'>Wishlist</Link>
         </li>
         <li

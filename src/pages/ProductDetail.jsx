@@ -8,6 +8,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import { IoCartOutline } from 'react-icons/io5';
 import UserContext from '../lib/store/userContext';
 import UIContext from '../lib/store/uiContext';
+import CartContext from '../lib/store/cartContext';
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -15,6 +16,7 @@ const ProductDetail = () => {
   const { products, getProducts } = useContext(ProductContext);
   const { token } = useContext(UserContext);
   const { setAlert } = useContext(UIContext);
+  const { addToCart } = useContext(CartContext);
   const productDetail = products.find((product) => product._id === productId);
 
   const addToWishlistHandler = () => {
@@ -50,6 +52,29 @@ const ProductDetail = () => {
           message: error.response.data.message,
         });
       });
+  };
+
+  const addToCartHandler = async () => {
+    const productObj = {
+      productId: productDetail._id,
+      title: productDetail.title,
+      image: productDetail.image,
+      category: productDetail.category,
+      price: productDetail.price,
+      quantity: 1,
+    };
+    const result = await addToCart(productObj, token);
+    if (result.errorObj) {
+      setAlert({
+        type: 'failure',
+        message: result.errorObj.message,
+      });
+    } else {
+      setAlert({
+        type: 'success',
+        message: 'Item added to cart!',
+      });
+    }
   };
 
   useEffect(() => {
@@ -95,7 +120,7 @@ const ProductDetail = () => {
               <p className='mb-8'>{description}</p>
               <div className='flex justify-center md:justify-start md:gap-3'>
                 <Button
-                  // onClick={addToCartHandler}
+                  onClick={() => addToCartHandler()}
                   className='text-center'
                 >
                   Add to cart <IoCartOutline className='ml-2 text-xl' />
