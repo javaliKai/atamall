@@ -27,6 +27,9 @@ const Header = () => {
           <Link to='/cart'>Cart</Link>
         </li>
         <li className='hover:underline hover:text-cyan-900'>
+          <Link to='/order'>Orders</Link>
+        </li>
+        <li className='hover:underline hover:text-cyan-900'>
           <Link to='/wishlist'>Wishlist</Link>
         </li>
         <li

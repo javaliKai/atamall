@@ -38,7 +38,10 @@ const Checkout = () => {
       <main className='relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:px-8'>
         <h1 className='sr-only'>Checkout</h1>
         <CheckoutSummary cartItems={cartItems} />
-        <CheckoutPayment customerAddressArr={user.address} />
+        <CheckoutPayment
+          customerAddressArr={user.address}
+          products={cartItems}
+        />
       </main>
     </div>
   );

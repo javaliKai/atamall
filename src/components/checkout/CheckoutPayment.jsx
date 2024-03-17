@@ -1,12 +1,36 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Label, Select, Button } from 'flowbite-react';
+import alipayQr from '../../assets/alipay-qr.jpeg';
+import wechatQr from '../../assets/wechat-qr.png';
+import OrderContext from '../../lib/store/orderContext';
+import UserContext from '../../lib/store/userContext';
+import UIContext from '../../lib/store/uiContext';
+import CartContext from '../../lib/store/cartContext';
 
-const CheckoutPayment = ({ customerAddressArr }) => {
-  const [paymentMethod, setPaymentMethod] = useState('');
+const CheckoutPayment = ({ customerAddressArr, products }) => {
+  const navigate = useNavigate();
 
-  console.log(paymentMethod);
-  console.log(customerAddressArr);
+  const { addOrder } = useContext(OrderContext);
+  const { token } = useContext(UserContext);
+  const { setAlert } = useContext(UIContext);
+  const { emptyCart, getCart } = useContext(CartContext);
+  const [paymentMethod, setPaymentMethod] = useState('credit card');
+
+  const submitCheckoutHandler = async (e) => {
+    e.preventDefault();
+    const result = await addOrder(products, paymentMethod, token);
+    if (result.errorObj) {
+      setAlert({ type: 'failure', message: result.errorObj.message });
+      return;
+    }
+
+    // empty the user cart
+    await emptyCart(token);
+
+    // redirect to the order page when success
+    navigate('/order');
+  };
 
   let paymentDetailsContent;
   if (paymentMethod === 'credit card') {
@@ -26,6 +50,7 @@ const CheckoutPayment = ({ customerAddressArr }) => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 id='card-number'
                 name='card-number'
@@ -44,6 +69,7 @@ const CheckoutPayment = ({ customerAddressArr }) => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 name='expiration-date'
                 id='expiration-date'
@@ -62,6 +88,7 @@ const CheckoutPayment = ({ customerAddressArr }) => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 name='cvc'
                 id='cvc'
@@ -73,48 +100,27 @@ const CheckoutPayment = ({ customerAddressArr }) => {
         </div>
       </div>
     );
-  } else if (paymentMethod === 'bitcoin') {
+  } else if (paymentMethod === 'alipay') {
     paymentDetailsContent = (
       <div className='mt-10'>
         <h3 id='payment-heading' className='text-lg font-medium text-gray-900'>
-          Payment details
+          Payment details - {paymentMethod}
         </h3>
 
-        <div className='mt-6 grid grid-cols-3 gap-y-6 gap-x-4 sm:grid-cols-4'>
-          <div className='col-span-3 sm:col-span-4'>
-            <label
-              htmlFor='walletAddress'
-              className='block text-sm font-medium text-gray-700'
-            >
-              Wallet address
-            </label>
-            <div className='mt-1'>
-              <input
-                type='text'
-                id='walletAddress'
-                name='walletAddress'
-                autoComplete='cc-number'
-                className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-              />
-            </div>
-          </div>
-          <div className='col-span-3 sm:col-span-4'>
-            <label
-              htmlFor='privateKey'
-              className='block text-sm font-medium text-gray-700'
-            >
-              Private Key
-            </label>
-            <div className='mt-1'>
-              <input
-                type='text'
-                id='privateKey'
-                name='privateKey'
-                autoComplete='cc-number'
-                className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-              />
-            </div>
-          </div>
+        <div className=''>
+          <img src={alipayQr} width='100%' height='100%' />
+        </div>
+      </div>
+    );
+  } else if (paymentMethod === 'wechat') {
+    paymentDetailsContent = (
+      <div className='mt-10'>
+        <h3 id='payment-heading' className='text-lg font-medium text-gray-900'>
+          Payment details - {paymentMethod}
+        </h3>
+
+        <div className=''>
+          <img src={wechatQr} width='100%' height='100%' />
         </div>
       </div>
     );
@@ -159,8 +165,8 @@ const CheckoutPayment = ({ customerAddressArr }) => {
         Payment and shipping details
       </h2>
 
-      {/* <form onSubmit={submitCheckoutHandler}> */}
-      <form>
+      {/* <form> */}
+      <form onSubmit={submitCheckoutHandler}>
         <div className='mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0'>
           <div className='mt-10'>
             <h3

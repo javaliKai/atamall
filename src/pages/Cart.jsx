@@ -34,7 +34,7 @@ const Cart = () => {
     cartItemContent = <p>Your cart is empty</p>;
   } else {
     cartItemContent = cartItems.map((item) => {
-      return <CartItemComponent item={item} key={item.product_id} />;
+      return <CartItemComponent item={item} key={item._id} />;
     });
   }
 

@@ -8,6 +8,7 @@ const CartContext = createContext({
   increaseQty: (productObj, token) => {},
   decreaseQty: (productId) => {},
   removeItem: (productId) => {},
+  emptyCart: (token) => {},
 });
 
 export const CartContextProvider = ({ children }) => {
@@ -132,6 +133,28 @@ export const CartContextProvider = ({ children }) => {
     }
   };
 
+  const emptyCart = async (token) => {
+    const result = {
+      success: false,
+      errorObj: undefined,
+    };
+    try {
+      const response = await axios.delete('/api/cart/', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const currentUserCart = response.data.userCart;
+      setCartItems(currentUserCart.products);
+      result.success = true;
+    } catch (error) {
+      result.errorObj = error.response.data;
+    } finally {
+      return result;
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -141,6 +164,7 @@ export const CartContextProvider = ({ children }) => {
         increaseQty,
         decreaseQty,
         removeItem,
+        emptyCart,
       }}
     >
       {children}

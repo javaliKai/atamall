@@ -9,6 +9,8 @@ import ProductDetail from './pages/ProductDetail';
 import Wishlist from './pages/Wishlist';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import Orders from './pages/Orders';
+import OrderDetail from './pages/OrderDetail';
 
 const Routes = (isAuthenticated) => [
   {
@@ -45,6 +47,14 @@ const Routes = (isAuthenticated) => [
   {
     path: '/checkout',
     element: isAuthenticated ? <Checkout /> : <Navigate to='/signin' />,
+  },
+  {
+    path: '/order',
+    element: isAuthenticated ? <Orders /> : <Navigate to='/signin' />,
+  },
+  {
+    path: '/order/:orderId',
+    element: isAuthenticated ? <OrderDetail /> : <Navigate to='/signin' />,
   },
   {
     path: '*',
