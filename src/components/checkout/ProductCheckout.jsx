@@ -10,7 +10,7 @@ const ProductCheckout = ({ product }) => {
       />
       <div className='flex-auto space-y-1'>
         <h3 className='text-black'>{product.title}</h3>
-        <p>{product.category}</p>
+        <p className='capitalize'>{product.category}</p>
       </div>
       <p className='flex-none text-base font-medium text-black'>
         ${product.price}

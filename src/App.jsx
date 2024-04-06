@@ -7,14 +7,21 @@ import { useContext, useEffect } from 'react';
 import UIContext from './lib/store/uiContext';
 import { Alert } from 'flowbite-react';
 import UserContext from './lib/store/userContext';
+import AdminNav from './components/layout/AdminNav';
 
 function App() {
   const { alert, resetAlert, setAlert } = useContext(UIContext);
   const { tradeToken, user } = useContext(UserContext);
+  let userRole = undefined;
+  if (user) {
+    userRole = user.role;
+  }
 
-  let isAuthenticated =
+  const isAuthenticated =
     user !== undefined || localStorage.getItem('atamall_auth');
-  const routing = useRoutes(Routes(isAuthenticated));
+  const isAdmin = userRole === 'admin' || false;
+
+  const routing = useRoutes(Routes(isAuthenticated, isAdmin));
 
   // run on initial render
   useEffect(() => {
@@ -50,6 +57,21 @@ function App() {
       clearTimeout(alertTimeout);
     };
   }, [alert]);
+
+  // render different layout for admin
+  if (userRole === 'admin') {
+    return (
+      <>
+        {alert && (
+          <Alert className='fixed right-2 top-[10vh] z-50' color={alert.type}>
+            <span>{alert.message}</span>
+          </Alert>
+        )}
+        <AdminNav />
+        <main className='py-[5rem] px-[1rem]'>{routing}</main>{' '}
+      </>
+    );
+  }
 
   return (
     <>

@@ -16,12 +16,14 @@ const Orders = () => {
 
   return (
     <>
-      <div className='my-5'>
+      <div className='my-5 min-h-[70vh]'>
         <h2 className='my-3 text-2xl dark:text-white lg:text-3xl font-semibold leading-7 lg:leading-9 text-gray-800'>
           Your Orders
         </h2>
         <ul className='flex flex-col-reverse mx-auto my-5 max-w-md divide-y divide-gray-200 dark:divide-gray-700'>
-          {orders.length === 0 && <p>You have no orders.</p>}
+          {orders.length === 0 && (
+            <p className='italic text-center'>You have no orders.</p>
+          )}
           {orders.map((order) => (
             <OrderItem key={order._id} order={order} />
           ))}

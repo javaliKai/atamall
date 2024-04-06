@@ -146,7 +146,9 @@ export const CartContextProvider = ({ children }) => {
       });
 
       const currentUserCart = response.data.userCart;
-      setCartItems(currentUserCart.products);
+      setCartItems([]);
+      console.log(cartItems);
+      // getCart(token);
       result.success = true;
     } catch (error) {
       result.errorObj = error.response.data;

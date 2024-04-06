@@ -4,7 +4,7 @@ import { Label, TextInput, Button } from 'flowbite-react';
 import UserContext from '../../lib/store/userContext';
 import UIContext from '../../lib/store/uiContext';
 
-const SigninForm = () => {
+const SigninForm = ({ type }) => {
   const navigate = useNavigate();
   const { signIn } = useContext(UserContext);
   const { setAlert } = useContext(UIContext);
@@ -30,6 +30,11 @@ const SigninForm = () => {
       type: 'success',
       message: `Login success! Welcome, ${result.user.name}`,
     });
+
+    if (type === 'admin') {
+      return navigate('/admin/dashboard');
+    }
+
     return navigate('/');
   };
 

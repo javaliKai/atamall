@@ -9,6 +9,14 @@ const UIContext = createContext({
   resetAlert: () => {},
   showAddressModal: false,
   toggleAddressModal: (state) => {},
+  showEditProductModal: false,
+  toggleEditProductModal: (state) => {},
+  showDeleteProductModal: false,
+  toggleDeleteProductModal: (state) => {},
+  showAddProductModal: false,
+  toggleAddProductModal: (state) => {},
+  showConfirmOrderModal: false,
+  toggleConfirmOrderModal: (state) => {},
 });
 
 // Exporting provider: the wrapper component that enables state sharing
@@ -17,6 +25,10 @@ export const UIContextProvider = (props) => {
   const [showSideNav, setShowSideNav] = useState(false);
   const [alert, setAlertState] = useState(undefined);
   const [showAddressModal, setShowAddressModal] = useState(false);
+  const [showEditProductModal, setEditProductModal] = useState(false);
+  const [showDeleteProductModal, setDeleteProductModal] = useState(false);
+  const [showAddProductModal, setAddProductModal] = useState(false);
+  const [showConfirmOrderModal, setShowConfirmOrderModal] = useState(false);
 
   const toggleSideNav = () => {
     setShowSideNav((prevState) => !prevState);
@@ -36,6 +48,22 @@ export const UIContextProvider = (props) => {
     setShowAddressModal(state);
   };
 
+  const toggleEditProductModal = (state) => {
+    setEditProductModal(state);
+  };
+
+  const toggleDeleteProductModal = (state) => {
+    setDeleteProductModal(state);
+  };
+
+  const toggleAddProductModal = (state) => {
+    setAddProductModal(state);
+  };
+
+  const toggleConfirmOrderModal = (state) => {
+    setShowConfirmOrderModal(state);
+  };
+
   return (
     <UIContext.Provider
       value={{
@@ -46,6 +74,14 @@ export const UIContextProvider = (props) => {
         resetAlert,
         showAddressModal,
         toggleAddressModal,
+        showEditProductModal,
+        toggleEditProductModal,
+        showDeleteProductModal,
+        toggleDeleteProductModal,
+        showAddProductModal,
+        toggleAddProductModal,
+        showConfirmOrderModal,
+        toggleConfirmOrderModal,
       }}
     >
       {props.children}

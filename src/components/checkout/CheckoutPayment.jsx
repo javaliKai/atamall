@@ -12,24 +12,35 @@ const CheckoutPayment = ({ customerAddressArr, products }) => {
   const navigate = useNavigate();
 
   const { addOrder } = useContext(OrderContext);
-  const { token } = useContext(UserContext);
+  const { token, user } = useContext(UserContext);
   const { setAlert } = useContext(UIContext);
   const { emptyCart, getCart } = useContext(CartContext);
   const [paymentMethod, setPaymentMethod] = useState('credit card');
 
   const submitCheckoutHandler = async (e) => {
     e.preventDefault();
-    const result = await addOrder(products, paymentMethod, token);
+    const shippingAddress = user.address[0];
+    console.log(shippingAddress);
+    const result = await addOrder(
+      products,
+      paymentMethod,
+      shippingAddress,
+      token
+    );
     if (result.errorObj) {
       setAlert({ type: 'failure', message: result.errorObj.message });
       return;
     }
 
-    // empty the user cart
-    await emptyCart(token);
+    setAlert({ type: 'success', message: 'Checkout success!' });
 
-    // redirect to the order page when success
-    navigate('/order');
+    // empty the user cart
+    emptyCart(token);
+
+    setTimeout(() => {
+      // redirect to the order page when success
+      navigate('/order');
+    }, 3000);
   };
 
   let paymentDetailsContent;

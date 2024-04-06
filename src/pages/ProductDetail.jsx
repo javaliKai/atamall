@@ -14,10 +14,11 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { products, getProducts } = useContext(ProductContext);
-  const { token } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
   const { setAlert } = useContext(UIContext);
   const { addToCart } = useContext(CartContext);
   const productDetail = products.find((product) => product._id === productId);
+  const isAdmin = user.role === 'admin';
 
   const addToWishlistHandler = () => {
     // redirect to sign in if no token found
@@ -119,18 +120,22 @@ const ProductDetail = () => {
               </div>
               <p className='mb-8'>{description}</p>
               <div className='flex justify-center md:justify-start md:gap-3'>
-                <Button
-                  onClick={() => addToCartHandler()}
-                  className='text-center'
-                >
-                  Add to cart <IoCartOutline className='ml-2 text-xl' />
-                </Button>
-                <Button
-                  onClick={() => addToWishlistHandler()}
-                  className='text-center'
-                >
-                  Add to Wishlist <FaRegHeart className='ml-2' />
-                </Button>
+                {!isAdmin && (
+                  <>
+                    <Button
+                      onClick={() => addToCartHandler()}
+                      className='text-center'
+                    >
+                      Add to cart <IoCartOutline className='ml-2 text-xl' />
+                    </Button>
+                    <Button
+                      onClick={() => addToWishlistHandler()}
+                      className='text-center'
+                    >
+                      Add to Wishlist <FaRegHeart className='ml-2' />
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>

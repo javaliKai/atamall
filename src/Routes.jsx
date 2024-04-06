@@ -11,8 +11,11 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import OrderDetail from './pages/OrderDetail';
+import AdminSignIn from './pages/AdminSignIn';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminOrders from './pages/AdminOrders';
 
-const Routes = (isAuthenticated) => [
+const Routes = (isAuthenticated, isAdmin) => [
   {
     path: '/',
     element: <Home />,
@@ -59,6 +62,33 @@ const Routes = (isAuthenticated) => [
   {
     path: '*',
     element: <NotFound />,
+  },
+  {
+    path: '/admin/signin',
+    element:
+      isAuthenticated && isAdmin ? (
+        <Navigate to='/admin/dashboard' />
+      ) : (
+        <AdminSignIn />
+      ),
+  },
+  {
+    path: '/admin/dashboard',
+    element:
+      isAuthenticated && isAdmin ? (
+        <AdminDashboard />
+      ) : (
+        <Navigate to='/admin/signin' />
+      ),
+  },
+  {
+    path: '/admin/orders',
+    element:
+      isAuthenticated && isAdmin ? (
+        <AdminOrders />
+      ) : (
+        <Navigate to='/admin/signin' />
+      ),
   },
 ];
 
