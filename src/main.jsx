@@ -8,6 +8,7 @@ import { UserContextProvider } from './lib/store/userContext.jsx';
 import { ProductContextProvider } from './lib/store/productContext.jsx';
 import { CartContextProvider } from './lib/store/cartContext.jsx';
 import { OrderContextProvider } from './lib/store/orderContext.jsx';
+import { AnalyticsContextProvider } from './lib/store/analyticsContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <ProductContextProvider>
           <CartContextProvider>
             <OrderContextProvider>
-              <App />
+              <AnalyticsContextProvider>
+                <App />
+              </AnalyticsContextProvider>
             </OrderContextProvider>
           </CartContextProvider>
         </ProductContextProvider>

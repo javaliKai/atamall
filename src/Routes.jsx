@@ -14,6 +14,7 @@ import OrderDetail from './pages/OrderDetail';
 import AdminSignIn from './pages/AdminSignIn';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminOrders from './pages/AdminOrders';
+import AdminAnalytics from './pages/AdminAnalytics';
 
 const Routes = (isAuthenticated, isAdmin) => [
   {
@@ -86,6 +87,15 @@ const Routes = (isAuthenticated, isAdmin) => [
     element:
       isAuthenticated && isAdmin ? (
         <AdminOrders />
+      ) : (
+        <Navigate to='/admin/signin' />
+      ),
+  },
+  {
+    path: '/admin/analytics',
+    element:
+      isAuthenticated && isAdmin ? (
+        <AdminAnalytics />
       ) : (
         <Navigate to='/admin/signin' />
       ),

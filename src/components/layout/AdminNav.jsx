@@ -24,7 +24,9 @@ const AdminNav = () => {
         <Navbar.Link active={currentPage === 'orders'}>
           <Link to='/admin/orders'>Orders</Link>
         </Navbar.Link>
-        <Navbar.Link href='#'>Sales Report</Navbar.Link>
+        <Navbar.Link active={currentPage === 'analytics'}>
+          <Link to='/admin/analytics'>Sales Analytics</Link>
+        </Navbar.Link>
         <Navbar.Link onClick={() => signOut()} className='cursor-pointer'>
           Sign Out
         </Navbar.Link>
